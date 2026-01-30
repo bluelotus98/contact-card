@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Bou-Abboud Jr - Contact</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(180deg, #0a0e1a 0%, #151c2c 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .card {
+            background: linear-gradient(180deg, #151c2c 0%, #0d1219 100%);
+            border-radius: 20px;
+            border: 1px solid rgba(99, 130, 191, 0.15);
+            box-shadow: 0 25px 80px -12px rgba(0, 0, 0, 0.6), 0 0 40px -15px rgba(59, 130, 246, 0.15);
+            max-width: 500px;
+            width: 100%;
+            padding: 32px 24px;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .logo {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 4px 15px -3px rgba(59, 130, 246, 0.4);
+        }
+
+        .header-text {
+            flex: 1;
+        }
+
+        h1 {
+            color: #f1f5f9;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .subtitle {
+            color: rgba(148, 163, 184, 0.7);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .contact-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(99, 130, 191, 0.15);
+            cursor: pointer;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            border-color: rgba(59, 130, 246, 0.4);
+        }
+
+        .contact-btn:active {
+            transform: translateY(0);
+        }
+
+        .icon-wrapper {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .btn-phone {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
+            color: #60a5fa;
+        }
+
+        .btn-phone .icon-wrapper {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            box-shadow: 0 4px 12px -2px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-email {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.1) 0%, rgba(236, 72, 153, 0.05) 100%);
+            color: #f9a8d4;
+        }
+
+        .btn-email .icon-wrapper {
+            background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+            box-shadow: 0 4px 12px -2px rgba(236, 72, 153, 0.4);
+        }
+
+        .btn-website {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1) 0%, rgba(14, 165, 233, 0.05) 100%);
+            color: #7dd3fc;
+        }
+
+        .btn-website .icon-wrapper {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            box-shadow: 0 4px 12px -2px rgba(14, 165, 233, 0.4);
+        }
+
+        .btn-linkedin {
+            background: linear-gradient(135deg, rgba(0, 119, 181, 0.1) 0%, rgba(0, 119, 181, 0.05) 100%);
+            color: #60a5fa;
+        }
+
+        .btn-linkedin .icon-wrapper {
+            background: linear-gradient(135deg, #0077b5 0%, #00a0dc 100%);
+            box-shadow: 0 4px 12px -2px rgba(0, 119, 181, 0.4);
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
+            color: #6ee7b7;
+        }
+
+        .btn-save .icon-wrapper {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            box-shadow: 0 4px 12px -2px rgba(16, 185, 129, 0.4);
+        }
+
+        .divider {
+            height: 1px;
+            background: rgba(99, 130, 191, 0.15);
+            margin: 24px 0;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .info-card {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(99, 130, 191, 0.08);
+            border-radius: 12px;
+            padding: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .info-card:hover {
+            background: rgba(59, 130, 246, 0.05);
+            border-color: rgba(59, 130, 246, 0.15);
+        }
+
+        .info-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: rgba(148, 163, 184, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #60a5fa;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(99, 130, 191, 0.08);
+        }
+
+        .footer-text {
+            color: rgba(148, 163, 184, 0.5);
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 24px 20px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            .logo {
+                width: 56px;
+                height: 56px;
+                font-size: 24px;
+            }
+
+            .contact-btn {
+                font-size: 14px;
+                padding: 14px 16px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="header">
+            <div class="logo">CB</div>
+            <div class="header-text">
+                <h1>Claude Bou-Abboud Jr</h1>
+                <p class="subtitle">Blue Lotus Solutions</p>
+            </div>
+        </div>
+
+        <div class="contact-buttons">
+            <a href="tel:+14438415209" class="contact-btn btn-phone">
+                <div class="icon-wrapper">
+                    <svg class="icon" fill="white" viewBox="0 0 20 20">
+                        <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                    </svg>
+                </div>
+                <span>Call Me</span>
+            </a>
+
+            <a href="mailto:bluelotusconsultingteam@gmail.com" class="contact-btn btn-email">
+                <div class="icon-wrapper">
+                    <svg class="icon" fill="white" viewBox="0 0 20 20">
+                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                    </svg>
+                </div>
+                <span>Send Email</span>
+            </a>
+
+            <a href="https://bluelotussolutions.ai" target="_blank" rel="noopener" class="contact-btn btn-website">
+                <div class="icon-wrapper">
+                    <svg class="icon" fill="white" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+                <span>Visit Website</span>
+            </a>
+
+            <a href="https://www.linkedin.com/in/claude-bou-abboud-jr-a5310515a/" target="_blank" rel="noopener" class="contact-btn btn-linkedin">
+                <div class="icon-wrapper">
+                    <svg class="icon" fill="white" viewBox="0 0 24 24">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                </div>
+                <span>Connect on LinkedIn</span>
+            </a>
+
+            <a href="#" id="saveContact" class="contact-btn btn-save">
+                <div class="icon-wrapper">
+                    <svg class="icon" fill="white" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+                <span>Save to Contacts</span>
+            </a>
+        </div>
+
+        <div class="footer">
+            <p class="footer-text">Blue Lotus Solutions</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('saveContact').addEventListener('click', function(e) {
+            e.preventDefault();
+
+            // Create vCard data
+            const vcard = `BEGIN:VCARD
+VERSION:3.0
+FN:Claude Bou-Abboud Jr
+TEL;TYPE=CELL:+1-443-841-5209
+EMAIL:bluelotusconsultingteam@gmail.com
+URL:https://bluelotussolutions.ai
+URL:https://www.linkedin.com/in/claude-bou-abboud-jr-a5310515a/
+ORG:Blue Lotus Solutions
+END:VCARD`;
+
+            // Create blob and download
+            const blob = new Blob([vcard], { type: 'text/vcard' });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'Claude_Bou-Abboud_Jr.vcf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+        });
+    </script>
+</body>
+</html>
