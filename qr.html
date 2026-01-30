@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>3D QR Code</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:linear-gradient(180deg,#0a0e27 0%,#141937 50%,#1a1f3a 100%);min-height:100vh;display:flex;justify-content:center;align-items:center;font-family:-apple-system,sans-serif;overflow:hidden;perspective:1000px;position:relative}
+.stars-container{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.star{position:absolute;border-radius:50%;background:#fff;will-change:opacity,transform;animation:twinkle ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:.2;transform:scale(1)}50%{opacity:1;transform:scale(1.2)}}
+.scene{width:600px;height:600px;position:relative;transform-style:preserve-3d;z-index:1;will-change:transform}
+.qr-card{position:absolute;width:100%;height:100%;transform-style:preserve-3d;will-change:transform}
+.qr-front{position:absolute;width:100%;height:100%;background:rgba(20,25,55,.95);border-radius:30px;display:flex;justify-content:center;align-items:center;backface-visibility:hidden;box-shadow:0 50px 100px rgba(0,0,0,.8),0 0 80px rgba(59,130,246,.3),inset 0 0 60px rgba(59,130,246,.05);border:2px solid rgba(59,130,246,.2)}
+.qr-glow{position:absolute;width:110%;height:110%;border-radius:35px;background:radial-gradient(circle,rgba(59,130,246,.4) 0%,rgba(139,92,246,.2) 50%,transparent 70%);filter:blur(40px);animation:pulse 3s ease-in-out infinite;transform:translateZ(-50px);will-change:transform,opacity}
+@keyframes pulse{0%,100%{opacity:.6;transform:translateZ(-50px) scale(1)}50%{opacity:1;transform:translateZ(-50px) scale(1.1)}}
+.qr-image{width:85%;height:85%;object-fit:contain;transform:translateZ(30px);filter:drop-shadow(0 20px 40px rgba(0,0,0,.5));position:relative;z-index:2}
+.logo{position:absolute;width:120px;height:120px;top:50%;left:50%;transform:translate(-50%,-50%) translateZ(60px);background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;padding:15px;box-shadow:0 10px 40px rgba(0,0,0,.6),0 0 30px rgba(59,130,246,.5);border:3px solid rgba(59,130,246,.3);will-change:transform;animation:logoFloat 4s ease-in-out infinite}
+.logo img{width:100%;height:100%;object-fit:contain}
+@keyframes logoFloat{0%,100%{transform:translate(-50%,-50%) translateZ(60px) scale(1)}50%{transform:translate(-50%,-50%) translateZ(70px) scale(1.05)}}
+.particle{position:absolute;width:4px;height:4px;background:rgba(59,130,246,.6);border-radius:50%;pointer-events:none;animation:float ease-in-out infinite;will-change:transform,opacity}
+@keyframes float{0%,100%{transform:translateY(0) translateZ(0);opacity:.3}50%{transform:translateY(-30px) translateZ(50px);opacity:1}}
+.info{position:absolute;bottom:-80px;left:50%;transform:translateX(-50%);text-align:center;color:rgba(255,255,255,.6);font-size:14px;white-space:nowrap}
+@keyframes rotate{0%,100%{transform:rotateX(0) rotateY(0) translateZ(50px)}25%{transform:rotateX(10deg) rotateY(15deg) translateZ(50px)}50%{transform:rotateX(0) rotateY(0) translateZ(50px)}75%{transform:rotateX(-10deg) rotateY(-15deg) translateZ(50px)}}
+@media(max-width:768px){.scene{width:90vw;height:90vw;max-width:500px;max-height:500px}}
+</style>
+</head>
+<body>
+<div class="stars-container" id="s"></div>
+<div class="scene" id="scene">
+<div class="qr-glow" id="glow"></div>
+<div class="qr-card" id="card">
+<div class="qr-front">
+<img src="contact_qr_code_animated.gif" alt="QR Code" class="qr-image" loading="eager">
+<div class="logo"><img src="Blue_Lotus_no_background.png" alt="Blue Lotus"></div>
+</div>
+</div>
+<div class="info">Move your mouse • 3D Interactive</div>
+</div>
+<script>
+(()=>{
+const d=document,s=d.getElementById('s'),scene=d.getElementById('scene'),card=d.getElementById('card'),glow=d.getElementById('glow');
+let rect,centerX,centerY,ticking=!1,idleTimer,isIdle=!1;
+
+// Stars - use fragment for better performance
+const frag=d.createDocumentFragment();
+for(let i=0;i<150;i++){
+const star=d.createElement('div');
+star.className='star';
+const x=Math.random()*100,y=Math.random()*100,size=Math.random()*2+1;
+star.style.cssText=`left:${x}%;top:${y}%;width:${size}px;height:${size}px;animation-duration:${Math.random()*3+2}s;animation-delay:${Math.random()*5}s;box-shadow:0 0 ${size*2}px rgba(255,255,255,.5)`;
+frag.appendChild(star);
+}
+s.appendChild(frag);
+
+// Particles
+const frag2=d.createDocumentFragment();
+for(let i=0;i<12;i++){
+const p=d.createElement('div');
+p.className='particle';
+p.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*3}s;animation-duration:${Math.random()*2+2}s`;
+frag2.appendChild(p);
+}
+scene.appendChild(frag2);
+
+// Cache rect
+const updateRect=()=>rect=scene.getBoundingClientRect();
+updateRect();
+window.addEventListener('resize',updateRect,{passive:!0});
+
+// RAF-optimized mouse tracking
+let mouseX=0,mouseY=0;
+const update=()=>{
+if(!rect)return;
+centerX=rect.left+rect.width/2;
+centerY=rect.top+rect.height/2;
+const rY=(mouseX-centerX)/centerX*25,rX=-(mouseY-centerY)/centerY*25;
+card.style.transform=`rotateX(${rX}deg) rotateY(${rY}deg) translateZ(50px)`;
+glow.style.transform=`translateZ(-50px) translateX(${(mouseX-centerX)*.05}px) translateY(${(mouseY-centerY)*.05}px)`;
+ticking=!1;
+};
+
+d.addEventListener('mousemove',e=>{
+mouseX=e.clientX;
+mouseY=e.clientY;
+if(!ticking){
+requestAnimationFrame(update);
+ticking=!0;
+}
+stopIdle();
+},{passive:!0});
+
+d.addEventListener('mouseleave',()=>card.style.transform='rotateX(0) rotateY(0) translateZ(50px)',{passive:!0});
+
+// Device orientation
+if(window.DeviceOrientationEvent){
+window.addEventListener('deviceorientation',e=>{
+const rY=(e.gamma||0)*.5,rX=(e.beta||0)*.5-45;
+card.style.transform=`rotateX(${rX}deg) rotateY(${rY}deg) translateZ(50px)`;
+},{passive:!0});
+}
+
+// Idle animation
+const startIdle=()=>{
+if(!isIdle){
+isIdle=!0;
+card.style.animation='rotate 20s ease-in-out infinite';
+}
+};
+const stopIdle=()=>{
+isIdle=!1;
+card.style.animation='none';
+clearTimeout(idleTimer);
+idleTimer=setTimeout(startIdle,3e3);
+};
+idleTimer=setTimeout(startIdle,3e3);
+})();
+</script>
+</body>
+</html>
