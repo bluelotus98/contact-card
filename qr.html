@@ -21,7 +21,6 @@ body{background:linear-gradient(180deg,#0a0e27 0%,#141937 50%,#1a1f3a 100%);min-
 @keyframes logoFloat{0%,100%{transform:translate(-50%,-50%) translateZ(60px) scale(1)}50%{transform:translate(-50%,-50%) translateZ(70px) scale(1.05)}}
 .particle{position:absolute;width:4px;height:4px;background:rgba(59,130,246,.6);border-radius:50%;pointer-events:none;animation:float ease-in-out infinite;will-change:transform,opacity}
 @keyframes float{0%,100%{transform:translateY(0) translateZ(0);opacity:.3}50%{transform:translateY(-30px) translateZ(50px);opacity:1}}
-.info{position:absolute;bottom:-80px;left:50%;transform:translateX(-50%);text-align:center;color:rgba(255,255,255,.6);font-size:14px;white-space:nowrap}
 @keyframes rotate{0%,100%{transform:rotateX(0) rotateY(0) translateZ(50px)}25%{transform:rotateX(10deg) rotateY(15deg) translateZ(50px)}50%{transform:rotateX(0) rotateY(0) translateZ(50px)}75%{transform:rotateX(-10deg) rotateY(-15deg) translateZ(50px)}}
 @media(max-width:768px){.scene{width:90vw;height:90vw;max-width:500px;max-height:500px}}
 </style>
@@ -36,7 +35,6 @@ body{background:linear-gradient(180deg,#0a0e27 0%,#141937 50%,#1a1f3a 100%);min-
 <div class="logo"><img src="Blue_Lotus_no_background.png" alt="Blue Lotus"></div>
 </div>
 </div>
-<div class="info">Move your mouse • 3D Interactive</div>
 </div>
 <script>
 (()=>{
@@ -93,12 +91,27 @@ stopIdle();
 
 d.addEventListener('mouseleave',()=>card.style.transform='rotateX(0) rotateY(0) translateZ(50px)',{passive:!0});
 
-// Device orientation
-if(window.DeviceOrientationEvent){
+// Enhanced device orientation for mobile
+const initOrientation=()=>{
 window.addEventListener('deviceorientation',e=>{
-const rY=(e.gamma||0)*.5,rX=(e.beta||0)*.5-45;
+if(e.gamma!==null&&e.beta!==null){
+const rY=Math.max(-25,Math.min(25,e.gamma));
+const rX=Math.max(-25,Math.min(25,-(e.beta-45)));
 card.style.transform=`rotateX(${rX}deg) rotateY(${rY}deg) translateZ(50px)`;
+glow.style.transform=`translateZ(-50px) translateX(${rY*.5}px) translateY(${rX*.5}px)`;
+}
 },{passive:!0});
+};
+
+// Request permission for iOS 13+
+if(typeof DeviceOrientationEvent!=='undefined'&&typeof DeviceOrientationEvent.requestPermission==='function'){
+document.addEventListener('click',()=>{
+DeviceOrientationEvent.requestPermission().then(permission=>{
+if(permission==='granted')initOrientation();
+}).catch(console.error);
+},{once:!0});
+}else if(window.DeviceOrientationEvent){
+initOrientation();
 }
 
 // Idle animation
